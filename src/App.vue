@@ -6,7 +6,6 @@
 </template>
 
 <script>
-    import VueRouter from 'vue-router'
     import FooterGuide from './components/FooterGuide/FooterGuide.vue'
     export default {
       components:{
