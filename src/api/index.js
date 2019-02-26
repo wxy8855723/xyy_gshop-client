@@ -26,3 +26,12 @@ export const getUser = () => ajax(BASE + '/userinfo')
 
 //10、用户登出
 export const logOut = () => ajax(BASE + '/logout')
+
+//请求商铺信息请求
+export const reqInfo = () => ajax('/info')
+
+//请求评价信息请求
+export const reqRatings = () => ajax('/ratings')
+
+//请求点餐信息的请求
+export const reqGoods = () => ajax('/goods')

@@ -6,7 +6,10 @@ import
   UPDATE_CATEGORYS,
   UPDATE_SHOPS,
   SAVE_USER,
-  RESET_USER
+  RESET_USER,
+  UPDATE_INFO,
+  UPDATE_RATINGS,
+  UPDATE_GOODS
 } from './mutation_types'
 
 import {
@@ -14,7 +17,10 @@ import {
   reqCatgorys,
   reqShops,
   getUser,
-  logOut
+  logOut,
+  reqGoods,
+  reqInfo,
+  reqRatings
 } from '../api'
 export default {
 
@@ -51,7 +57,30 @@ export default {
   async logOut ({commit}) {
     const result = await logOut()
     if (result.code === 0) commit(RESET_USER)
-  }
+  },
 
+  async getInfo ({commit}) {
+    const result = await reqInfo()
+    if (result.code === 0) {
+      const info = result.data
+      commit(UPDATE_INFO,{info})
+    }
+  },
+
+  async getGoods ({commit}) {
+    const result = await reqGoods()
+    if (result.code === 0) {
+      const goods = result.data
+      commit(UPDATE_GOODS,{goods})
+    }
+  },
+
+  async getRatings ({commit}) {
+    const result = await reqRatings()
+    if (result.code === 0) {
+      const ratings = result.data
+      commit(UPDATE_RATINGS,{ratings})
+    }
+  }
 
 }

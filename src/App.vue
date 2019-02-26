@@ -14,6 +14,10 @@
 
       mounted () {
         this.$store.dispatch('getUser')
+
+        this.$store.dispatch('getGoods')
+        this.$store.dispatch('getInfo')
+        this.$store.dispatch('getRatings')
       }
     }
 </script>
