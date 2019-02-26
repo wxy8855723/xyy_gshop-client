@@ -5,44 +5,50 @@
         <div class="login_header">
           <h2 class="login_logo">硅谷外卖</h2>
           <div class="login_header_title">
-            <a href="javascript:;" :class="{on:!isOn}" @click="isOn=false">短信登录</a>
-            <a href="javascript:;" :class="{on:isOn}" @click="isOn=true">密码登录</a>
+            <a href="javascript:;" :class="{on:!loginWay}" @click="loginWay=false">短信登录</a>
+            <a href="javascript:;" :class="{on:loginWay}" @click="loginWay=true">密码登录</a>
           </div>
         </div>
         <div class="login_content">
           <form>
-            <div :class="{on:!isOn}">
+            <div :class="{on:!loginWay}">
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机号">
-                <button disabled="disabled" class="get_verification">获取验证码</button>
+                <input type="text" maxlength="11" placeholder="手机号" v-model="phone">
+                <button
+                  :disabled="!isRightPhone"
+                  class="get_verification"
+                  :class="{right_phone_number:isRightPhone}" @click.prevent="startTime">
+                  {{computeTime ? `已发送(${computeTime}s)` : '获取验证码'}}
+                </button>
               </section>
               <section class="login_verification">
-                <input type="tel" maxlength="8" placeholder="验证码">
+                <input type="text" maxlength="8" placeholder="验证码" v-model="code">
               </section>
               <section class="login_hint">
                 温馨提示：未注册硅谷外卖帐号的手机号，登录时将自动注册，且代表已同意
                 <a href="javascript:;">《用户服务协议》</a>
               </section>
             </div>
-            <div :class="{on:isOn}">
+            <div :class="{on:loginWay}">
               <section>
                 <section class="login_message">
-                  <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
+                  <input type="text" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
                 </section>
                 <section class="login_verification">
-                  <input type="tel" maxlength="8" placeholder="密码">
-                  <div class="switch_button off">
-                    <div class="switch_circle"></div>
-                    <span class="switch_text">...</span>
+                  <input :type="shouPwd? 'text' : 'password'" maxlength="8" placeholder="密码" v-model="pwd">
+                  <div class="switch_button" :class="shouPwd ? 'on' : 'off'" @click="shouPwd = !shouPwd">
+                    <div class="switch_circle" :class="{right:shouPwd}"></div>
+                    <span class="switch_text">{{shouPwd?'abc':''}}</span>
                   </div>
                 </section>
                 <section class="login_message">
-                  <input type="text" maxlength="11" placeholder="验证码">
-                  <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                  <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
+                  <img class="get_verification" src="http://localhost:5000/captcha"
+                       alt="captcha" @click="updateCaptcha" ref="captchaId">
                 </section>
               </section>
             </div>
-            <button class="login_submit">登录</button>
+            <button class="login_submit" @click.prevent="login">登录</button>
           </form>
           <a href="javascript:;" class="about_us">关于我们</a>
         </div>
@@ -55,13 +61,86 @@
 </template>
 
 <script>
-  import {Toast, MessageBox} from 'mint-ui'
+  import {reqPwdLogin,reqSmsLogin,reqSendCode} from '../../api'
   export default {
     data() {
       return {
-        isOn:true  //true 密码登录 false 短信登录
+        loginWay:true, //true 密码登录 false 短信登录,
+        phone:'', // 手机号
+        computeTime:'', //倒计时时间
+        code:'', //一次性验证码
+        name:'', //用户名
+        pwd:'', //密码
+        captcha:'',//图形验证码
+        shouPwd:false
       }
-    }
+    },
+
+    methods: {
+      async startTime () {
+        if (!this.computeTime) {
+          this.computeTime = 30
+          const intervalId = setInterval( () => {
+            this.computeTime--
+            if (this.computeTime <= 0 || !isRightPhone) {
+              clearInterval(intervalId)
+              this.computeTime = 0
+            }
+          },1000)
+          const result = await reqSendCode(this.phone)
+          if (result.code === 0) {
+            alert('验证码发送成功')
+          } else {
+            alert(result.msg)
+            this.computeTime = 0
+          }
+        }
+      },
+
+      async login () {
+        const {loginWay,phone,code,name,pwd,captcha} = this
+        let result
+        if (loginWay) {
+          if (!name.trim()) {
+            alert('请输入正确的用户名')
+            return
+          } else if (!pwd.trim()) {
+            alert('请输入正确的密码')
+            return
+          } else if (!captcha.trim()) {
+            alert('请输入正确的验证码')
+            return
+          }
+          result = await reqPwdLogin({name,pwd,captcha})
+        } else {
+          if (!this.isRightPhone) {
+            alert('请输入正确的手机号')
+            return
+          } else if (!/^\d{6}$/.test(code)) {
+            alert('请输入正确的短信验证码')
+            return
+          }
+          result = await reqSmsLogin(phone,code)
+        }
+        if (result.code === 0) {
+          const user = result.data
+          this.$store.dispatch('saveUser',user)
+          this.$router.replace('/profile')
+        }
+      },
+
+      updateCaptcha () {
+        this.$refs.captchaId.src = "http://localhost:5000/captcha?" + Date.now()
+      }
+    },
+
+    computed: {
+      isRightPhone () {
+        return /^1\d{10}$/.test(this.phone)
+      }
+    },
+
+
   }
 </script>
 
@@ -126,7 +205,7 @@
                 color #ccc
                 font-size 14px
                 background transparent
-                &.
+                &.right_phone_number
                   color black
             .login_verification
               position relative

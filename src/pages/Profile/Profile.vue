@@ -1,18 +1,22 @@
 <template>
   <section class="profile">
     <Header title="个人中心"/>
-    <section class="profile-number" @click="goLogin">
+    <section class="profile-number" @click="$router.push(user._id ? '/profile':'/login')">
       <a href="javascript:" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
-          <p>
+          <p class="user-info-top" v-show="!user.phone">
+            {{user.name ? user.name : '登录/注册'}}
+          </p>
+          <p v-show="user.phone">
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">
+              {{user.phone ? user.phone : '暂无绑定手机号'}}
+            </span>
           </p>
         </div>
         <span class="arrow">
@@ -88,19 +92,39 @@
         </div>
       </a>
     </section>
+
+    <!--退出登录-->
+    <div v-show="user._id"
+         :style="{
+         width:'100%',
+         height:'30px',
+         background:'red',
+         lineHeight:'30px',
+         textAlign:'center'
+         }" @click="logOut">
+      退出登录
+    </div>
   </section>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     data() {
       return {}
     },
 
-    methods: {
-      goLogin() {
-        this.$router.push('/login')
+    methods : {
+      logOut () {
+        if (confirm('确定退出登录吗？')) {
+          this.$store.dispatch('logOut')
+          this.$router.replace('/login')
+        }
       }
+    },
+
+    computed:{
+      ...mapState(['user'])
     }
   }
 </script>
