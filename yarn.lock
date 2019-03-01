@@ -1019,7 +1019,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.0.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "http://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -1105,6 +1105,13 @@ batch@0.6.1:
   version "0.6.1"
   resolved "http://registry.npm.taobao.org/batch/download/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
+
+better-scroll@^1.14.1:
+  version "1.14.1"
+  resolved "http://registry.npm.taobao.org/better-scroll/download/better-scroll-1.14.1.tgz#65109c502a750d49543ffbb4208f421b33705c2f"
+  integrity sha1-ZRCcUCp1DUlUP/u0II9CGzNwXC8=
+  dependencies:
+    babel-runtime "^6.0.0"
 
 bfj-node4@^5.2.0:
   version "5.3.1"
@@ -3913,7 +3920,15 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha1-GSA/tZmR35jjoocFDUZHzerzJJk=
 
-js-yaml@^3.4.3, js-yaml@^3.9.0, js-yaml@^3.9.1:
+js-yaml@^3.4.3:
+  version "3.12.2"
+  resolved "http://registry.npm.taobao.org/js-yaml/download/js-yaml-3.12.2.tgz#ef1d067c5a9d9cb65bd72f285b5d8105c77f14fc"
+  integrity sha1-7x0GfFqdnLZb1y8oW12BBcd/FPw=
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
+js-yaml@^3.9.0, js-yaml@^3.9.1:
   version "3.12.1"
   resolved "http://registry.npm.taobao.org/js-yaml/download/js-yaml-3.12.1.tgz#295c8632a18a23e054cf5c9d3cecafe678167600"
   integrity sha1-KVyGMqGKI+BUz1ydPOyv5ngWdgA=
@@ -4429,6 +4444,11 @@ mockjs@^1.0.1-beta3:
   integrity sha1-0jTzwnJWOXVk8slVFC6JGQlTcgk=
   dependencies:
     commander "*"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "http://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -6915,19 +6935,19 @@ vue-eslint-parser@^2.0.3:
     lodash "^4.17.4"
 
 vue-hot-reload-api@^2.2.0:
-  version "2.3.2"
-  resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.2.tgz#1fcc1495effe08a790909b46bf7b5c4cfeb6f21b"
-  integrity sha1-H8wUle/+CKeQkJtGv3tcTP628hs=
+  version "2.3.3"
+  resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
+  integrity sha1-J1b0bLMlgFTF9HI96K5+hzAqHM8=
 
-vue-lazyload@^1.0.1:
+vue-lazyload@^1.0.1, vue-lazyload@^1.2.6:
   version "1.2.6"
   resolved "http://registry.npm.taobao.org/vue-lazyload/download/vue-lazyload-1.2.6.tgz#baa04c172d52a812608eb12c7a6bfb14f5c91079"
   integrity sha1-uqBMFy1SqBJgjrEsemv7FPXJEHk=
 
-vue-loader@^13.3.0:
-  version "13.7.3"
-  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-13.7.3.tgz#e07440f78230a639d00ada4da7b96d0e9d62037f"
-  integrity sha1-4HRA94IwpjnQCtpNp7ltDp1iA38=
+vue-loader@13.3.0:
+  version "13.3.0"
+  resolved "http://registry.npm.taobao.org/vue-loader/download/vue-loader-13.3.0.tgz#3bf837d490ba5dea6fc07e0835ffa6c688c8af33"
+  integrity sha1-O/g31JC6XepvwH4INf+mxojIrzM=
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
@@ -6969,7 +6989,7 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
-vue@^2.5.2:
+vue@^2.6.7:
   version "2.6.7"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.6.7.tgz#254f188e7621d2d19ee28d0c0442c6d21b53ae2d"
   integrity sha1-JU8YjnYh0tGe4o0MBELG0htTri0=

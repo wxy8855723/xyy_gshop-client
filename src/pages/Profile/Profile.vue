@@ -94,21 +94,14 @@
     </section>
 
     <!--退出登录-->
-    <div v-show="user._id"
-         :style="{
-         width:'100%',
-         height:'30px',
-         background:'red',
-         lineHeight:'30px',
-         textAlign:'center'
-         }" @click="logOut">
-      退出登录
-    </div>
+    <mt-button type="primary" v-show="user._id" @click="logOut" style="width: 100%">退出登录</mt-button>
+
   </section>
 </template>
 
 <script>
   import {mapState} from 'vuex'
+  import {MessageBox} from 'mint-ui'
   export default {
     data() {
       return {}
@@ -116,15 +109,19 @@
 
     methods : {
       logOut () {
-        if (confirm('确定退出登录吗？')) {
+        MessageBox.confirm('确定退出登录吗？').then( () => {
           this.$store.dispatch('logOut')
           this.$router.replace('/login')
-        }
+        }).catch( () => {
+          return
+        })
       }
     },
 
     computed:{
-      ...mapState(['user'])
+      ...mapState({
+        user: state => state.user.user
+      })
     }
   }
 </script>

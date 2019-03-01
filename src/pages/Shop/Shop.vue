@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ShoHeader/>
+        <ShopHeader/>
         <div class="tab">
           <div class="tab-item">
             <router-link to="/shop/goods" >点餐</router-link>
@@ -12,20 +12,23 @@
             <router-link to="/shop/info">商家</router-link>
           </div>
         </div>
-        <router-view/>
+
+        <keep-alive>
+          <router-view/>
+        </keep-alive>
     </div>
 </template>
 
 <script>
-    import ShoHeader from '../../components/ShopHeader/ShopHeader.vue'
+    import ShopHeader from '../../components/ShopHeader/ShopHeader.vue'
     export default {
       components:{
-        ShoHeader
+        ShopHeader
       }
     }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
   .tab
     height 40px
@@ -41,7 +44,6 @@
       a
         display block
         position relative
-        text-decoration none
         &.router-link-active
           color #02a774
           &::after
@@ -54,3 +56,4 @@
             transform translateX(-50%)
             background #02a774
 </style>
+

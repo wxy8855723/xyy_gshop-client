@@ -140,7 +140,15 @@
       }
     },
 
-
+    beforeRouteEnter (to,from,next) {
+      next( (component) => {
+          if (component.$store.state.user.user._id) {
+            next('profile')
+          } else {
+            next()
+          }
+      })
+    }
   }
 </script>
 

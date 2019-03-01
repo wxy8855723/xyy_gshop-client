@@ -4,6 +4,8 @@
 import ajax from './ajax'
 const BASE = '/api'
 //请求地理位置的请求
+// const BASE = ''
+
 export const reqAddress = (longitude,latitude) => ajax(BASE + `position/${latitude},${longitude}`,{longitude,latitude})
 
 //请求商品列表的请求

@@ -122,7 +122,13 @@
       },
 
       computed : {
-        ...mapState(['address','shops','categorys']),
+        // ...mapState(['address','shops','categorys']),
+        ...mapState({
+          address: state => state.msite.address,
+          shops: state => state.msite.shops,
+          categorys : state => state.msite.categorys
+        }),
+
         getCategory2 () {
           const categorys2 = []
           let arr = []
