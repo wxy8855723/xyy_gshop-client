@@ -3,6 +3,14 @@ import Order from '../pages/Order/Order.vue'
 import Search from '../pages/Search/Search.vue'
 import Profile from '../pages/Profile/Profile.vue'
 import Login from '../pages/Login/Login.vue'
+import Shop from '../pages/Shop/Shop.vue'
+import Goods from '../pages/Shop/Goods/Goods.vue'
+import Ratings from '../pages/Shop/Ratings/Ratings.vue'
+import Info from '../pages/Shop/Info/Info.vue'
+//
+// const Goods = () => import('../pages/Shop/Goods/Goods.vue')
+// const Ratings = () => import('../pages/Shop/Ratings/Ratings.vue')
+// const Info = () => import('../pages/Shop/Info/Info.vue')
 
 export default [
   {
@@ -36,6 +44,28 @@ export default [
   {
     path:'/login',
     component:Login,
+  },
+  {
+    path:'/shop',
+    component:Shop,
+    children:[
+      {
+        path:'/shop/goods',
+        component:Goods
+      },
+      {
+        path:'/shop/ratings',
+        component:Ratings
+      },
+      {
+        path:'/shop/info',
+        component:Info
+      },
+      {
+        path:'',
+        redirect: '/shop/goods'
+      }
+    ]
   },
   {
     path:'/',

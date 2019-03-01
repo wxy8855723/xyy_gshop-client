@@ -36,7 +36,10 @@
           </div>
           <div class="shop_container">
             <ul class="shop_list">
-              <li class="shop_li border-1px" v-for="(shop,index) in shops" :key="index">
+              <li class="shop_li border-1px"
+                  v-for="(shop,index) in shops"
+                  :key="index"
+                   @click="$router.push('/shop')">
                 <a>
                   <div class="shop_left">
                     <img class="shop_img" :src="shopBaseImgeUrl + shop.image_path">
@@ -119,7 +122,13 @@
       },
 
       computed : {
-        ...mapState(['address','shops','categorys']),
+        // ...mapState(['address','shops','categorys']),
+        ...mapState({
+          address: state => state.msite.address,
+          shops: state => state.msite.shops,
+          categorys : state => state.msite.categorys
+        }),
+
         getCategory2 () {
           const categorys2 = []
           let arr = []
